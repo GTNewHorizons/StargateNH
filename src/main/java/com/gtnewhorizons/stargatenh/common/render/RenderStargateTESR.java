@@ -46,9 +46,9 @@ public class RenderStargateTESR extends TileEntitySpecialRenderer {
         bindTexture(TEXTURE);
         model.renderOnly("static");
 
-        float ringRotation = controller.prevRingRotation
+        float ringAngle = controller.prevRingRotation
             + (controller.ringRotation - controller.prevRingRotation) * partialTicks;
-        GL11.glRotatef(ringRotation, 1F, 0F, 0F);
+        GL11.glRotatef(ringAngle % 360f, 1F, 0F, 0F);
 
         model.renderOnly("spinners");
 
