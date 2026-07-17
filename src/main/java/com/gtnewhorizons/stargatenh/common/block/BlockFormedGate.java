@@ -12,11 +12,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
 import com.gtnewhorizons.stargatenh.ModBlocks;
 import com.gtnewhorizons.stargatenh.common.tileentity.TileStargateController;
-import com.gtnewhorizons.stargatenh.common.util.StargateAddress;
-import com.gtnewhorizons.stargatenh.common.util.StargateRegistry;
 
 /**
  * Stargate blocks will transform into this invisible block when the multi is formed. Metadata is used to track
@@ -85,9 +82,10 @@ public class BlockFormedGate extends BlockContainer {
         Entity collider) {
         super.addCollisionBoxesToList(world, x, y, z, mask, list, collider);
 
+        if (world.isRemote) return;
         if (!(world.getTileEntity(x, y, z) instanceof TileStargateController controller)) return;
-        int[] dialed = controller.getDialed();
-        if (dialed == null) return;
+        if (!controller.isTransmitting()) return;
+
         if (collider instanceof EntityLivingBase entity) {
             AxisAlignedBB teleportBox;
             if (controller.facing == 0 || controller.facing == 2) {
@@ -97,9 +95,7 @@ public class BlockFormedGate extends BlockContainer {
             }
 
             if (teleportBox.intersectsWith(mask)) {
-                BlockPos teleport = StargateRegistry.get(world)
-                    .lookup(new StargateAddress(dialed));
-                if (teleport != null) entity.setLocationAndAngles(teleport.x, teleport.y, teleport.z, 0, 0);
+                controller.doTeleport(entity);
             }
         }
     }

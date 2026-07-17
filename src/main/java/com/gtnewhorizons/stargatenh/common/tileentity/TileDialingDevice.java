@@ -16,17 +16,17 @@ import com.cleanroommc.modularui.value.sync.InteractionSyncHandler;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.cleanroommc.modularui.widgets.ButtonWidget;
 import com.cleanroommc.modularui.widgets.CycleButtonWidget;
-import com.cleanroommc.modularui.widgets.layout.Row;
-import com.gtnewhorizon.gtnhlib.blockpos.BlockPos;
+import com.cleanroommc.modularui.widgets.layout.Flow;
 import com.gtnewhorizons.stargatenh.client.ui.UITextures;
 import com.gtnewhorizons.stargatenh.common.util.StargateAddress;
 import com.gtnewhorizons.stargatenh.common.util.StargateRegistry;
 
 public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiData> {
 
-    private final int[] address = { 0, 0, 0, 0, 0, 0, 0 };
-    private boolean hasAddress = false;
+    private final int[] registryAddress = { 0, 0, 0, 0, 0, 0, 0 };
     TileStargateController controller;
+
+    private final int[] dialingAddress = { 0, 0, 0, 0, 0, 0, 0 };
 
     public void connectGate() {
         if (worldObj.getTileEntity(xCoord + 4, yCoord, zCoord) instanceof TileStargateController c) controller = c;
@@ -46,7 +46,7 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
                     .marginRight(5)
                     .marginTop(5)
                     .marginBottom(-15));
-        } else if (hasAddress) buildDialingUI(panel, syncManager);
+        } else if (controller.hasAddress) buildDialingUI(panel, syncManager);
         else buildSetupUI(panel, syncManager);
 
         return panel;
@@ -54,12 +54,13 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
 
     private void buildSetupUI(ModularPanel panel, PanelSyncManager syncManager) {
         StargateRegistry reg = StargateRegistry.get(worldObj);
-        BooleanSyncValue isUnique = new BooleanSyncValue(() -> reg.lookup(new StargateAddress(address)) == null);
+        BooleanSyncValue isUnique = new BooleanSyncValue(
+            () -> reg.lookup(new StargateAddress(registryAddress)) == null);
 
         IntSyncValue[] chevrons = new IntSyncValue[7];
         for (int i = 0; i < chevrons.length; i++) {
             int fi = i;
-            chevrons[i] = new IntSyncValue(() -> address[fi], x -> address[fi] = x);
+            chevrons[i] = new IntSyncValue(() -> registryAddress[fi], x -> registryAddress[fi] = x).allowC2S();
             syncManager.syncValue("chevron" + i, chevrons[i]);
         }
 
@@ -73,7 +74,7 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
                 .marginTop(5)
                 .marginBottom(-15));
 
-        Row sigils = new Row();
+        Flow sigils = Flow.row();
         panel.child(
             sigils.size(156, 16)
                 .marginTop(20)
@@ -97,15 +98,17 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
                 .size(18, 18)
                 .tooltip(t -> t.add("Generate a random unused address"))
                 .overlay(UITextures.OVERLAY_RANDOM)
-                .syncHandler(new InteractionSyncHandler().setOnMousePressed(mouseData -> {
-                    Random rng = new Random();
-                    do {
-                        for (IntSyncValue chevron : chevrons) {
-                            chevron.setIntValue(rng.nextInt(16));
-                        }
-                        isUnique.updateCacheFromSource(false);
-                    } while (!isUnique.getBoolValue());
-                })));
+                .syncHandler(
+                    new InteractionSyncHandler().allowC2S()
+                        .setOnMousePressed(mouseData -> {
+                            Random rng = new Random();
+                            do {
+                                for (IntSyncValue chevron : chevrons) {
+                                    chevron.setIntValue(rng.nextInt(16));
+                                }
+                                isUnique.updateCacheFromSource(false);
+                            } while (!isUnique.getBoolValue());
+                        })));
 
         panel.child(
             IKey.dynamic(() -> isUnique.getBoolValue() ? "Address is available" : "Address already in use")
@@ -120,11 +123,12 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
                 .tooltip(t -> t.add("Lock in stargate address"))
                 .setEnabledIf(ignored -> isUnique.getBoolValue())
                 .overlay(UITextures.OVERLAY_CHECK)
-                .syncHandler(new InteractionSyncHandler().setOnMousePressed(mouseData -> {
-                    reg.register(new StargateAddress(address), new BlockPos(xCoord, yCoord, zCoord));
-                    hasAddress = true;
-                    panel.closeIfOpen();
-                })));
+                .syncHandler(
+                    new InteractionSyncHandler().allowC2S()
+                        .setOnMousePressed(mouseData -> {
+                            controller.setAddress(registryAddress);
+                            panel.closeIfOpen();
+                        })));
     }
 
     private void buildDialingUI(ModularPanel panel, PanelSyncManager syncManager) {
@@ -135,5 +139,40 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
                 .marginRight(5)
                 .marginTop(5)
                 .marginBottom(-15));
+
+        IntSyncValue[] chevrons = new IntSyncValue[7];
+        for (int i = 0; i < chevrons.length; i++) {
+            int fi = i;
+            chevrons[i] = new IntSyncValue(() -> dialingAddress[fi], x -> dialingAddress[fi] = x).allowC2S();
+            syncManager.syncValue("chevron" + i, chevrons[i]);
+        }
+
+        Flow sigils = Flow.row();
+        panel.child(
+            sigils.size(156, 16)
+                .marginTop(20)
+                .marginLeft(14)
+                .childPadding(6));
+
+        for (int i = 0; i < chevrons.length; i++) {
+            int fi = i;
+            sigils.child(
+                new CycleButtonWidget().syncHandler("chevron" + fi)
+                    .size(16, 16)
+                    .background(UITextures.SIGIL_BG)
+                    .hoverBackground(UITextures.SIGIL_BG_ACTIVE)
+                    .length(16)
+                    .overlay(new DynamicDrawable(() -> UITextures.getSigil(chevrons[fi].getIntValue()))));
+        }
+
+        panel.child(
+            new ButtonWidget<>().marginTop(48)
+                .marginLeft(148)
+                .size(18, 18)
+                .tooltip(t -> t.add("Dial address"))
+                .overlay(UITextures.OVERLAY_CHECK)
+                .syncHandler(
+                    new InteractionSyncHandler().allowC2S()
+                        .setOnMousePressed(mouseData -> { controller.dialOut(dialingAddress); })));
     }
 }
