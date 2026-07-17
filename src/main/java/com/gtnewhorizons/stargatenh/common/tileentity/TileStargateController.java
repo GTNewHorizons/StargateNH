@@ -6,6 +6,8 @@ import net.minecraft.util.AxisAlignedBB;
 public class TileStargateController extends TileEntity {
 
     public int facing = -1;
+    private final int[] address = { -1, -1, -1, -1, -1, -1, -1 };
+    private int[] dialed = null;
 
     public int setFacing() {
         facing = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
@@ -26,5 +28,9 @@ public class TileStargateController extends TileEntity {
 
         ringRotation += 1.0F;
         ringRotation %= 360F;
+    }
+
+    public int[] getDialed() {
+        return dialed;
     }
 }
