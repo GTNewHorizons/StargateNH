@@ -40,7 +40,7 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
         ModularPanel panel = new ModularPanel("panel").size(176, 100);
         if (controller == null) {
             panel.child(
-                IKey.str("Link Failed!")
+                IKey.lang("stargatenh.gui.dialing_device.link_failed")
                     .asWidget()
                     .marginLeft(5)
                     .marginRight(5)
@@ -67,7 +67,7 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
         syncManager.syncValue("isUnique", isUnique);
 
         panel.child(
-            IKey.str("Set Address for this Stargate")
+            IKey.lang("stargatenh.gui.dialing_device.set_address")
                 .asWidget()
                 .marginLeft(5)
                 .marginRight(5)
@@ -96,7 +96,7 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
             new ButtonWidget<>().marginTop(48)
                 .marginLeft(8)
                 .size(18, 18)
-                .tooltip(t -> t.add("Generate a random unused address"))
+                .tooltip(t -> t.add(IKey.lang("stargatenh.tooltip.dialing_device.generate_random")))
                 .overlay(UITextures.OVERLAY_RANDOM)
                 .syncHandler(
                     new InteractionSyncHandler().allowC2S()
@@ -111,7 +111,9 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
                         })));
 
         panel.child(
-            IKey.dynamic(() -> isUnique.getBoolValue() ? "Address is available" : "Address already in use")
+            IKey.lang(
+                () -> isUnique.getBoolValue() ? "stargatenh.gui.dialing_device.address.available"
+                    : "stargatenh.gui.dialing_device.address.in_use")
                 .asWidget()
                 .marginLeft(36)
                 .marginTop(52));
@@ -120,7 +122,7 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
             new ButtonWidget<>().marginTop(48)
                 .marginLeft(148)
                 .size(18, 18)
-                .tooltip(t -> t.add("Lock in stargate address"))
+                .tooltip(t -> t.add(IKey.lang("stargatenh.tooltip.dialing_device.lock_address")))
                 .setEnabledIf(ignored -> isUnique.getBoolValue())
                 .overlay(UITextures.OVERLAY_CHECK)
                 .syncHandler(
@@ -133,7 +135,7 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
 
     private void buildDialingUI(ModularPanel panel, PanelSyncManager syncManager) {
         panel.child(
-            IKey.str("Stargate operational.")
+            IKey.lang("stargatenh.gui.dialing_device.operational")
                 .asWidget()
                 .marginLeft(5)
                 .marginRight(5)
@@ -169,7 +171,7 @@ public class TileDialingDevice extends TileEntity implements IGuiHolder<PosGuiDa
             new ButtonWidget<>().marginTop(48)
                 .marginLeft(148)
                 .size(18, 18)
-                .tooltip(t -> t.add("Dial address"))
+                .tooltip(t -> t.add(IKey.lang("stargatenh.tooltip.dialing_device.dial_address")))
                 .overlay(UITextures.OVERLAY_CHECK)
                 .syncHandler(
                     new InteractionSyncHandler().allowC2S()

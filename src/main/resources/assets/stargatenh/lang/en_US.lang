@@ -1,5 +1,23 @@
+## StargateNH English (US) translation file
+
+### Blocks
 tile.stargate_block.0.name=Stargate Ring Block
 tile.stargate_block.1.name=Stargate Chevron Block
-tile.stargate_controller.name=Stargate Controller Block
+tile.stargate_controller.0.name=Stargate Controller Block
 tile.formed_stargate.name=Stargate
 tile.dialing_device.name=Dial Home Device
+
+### Elements
+## Gui
+# Dialing Device
+stargatenh.gui.dialing_device.link_failed=Link Failed!
+stargatenh.gui.dialing_device.set_address=Set Address for this Stargate
+stargatenh.gui.dialing_device.address.available=Address is available
+stargatenh.gui.dialing_device.address.in_use=Address already in use
+stargatenh.gui.dialing_device.operational=Stargate operational.
+
+## Tooltip
+# Dialing Device
+stargatenh.tooltip.dialing_device.generate_random=Generate a random unused address
+stargatenh.tooltip.dialing_device.lock_address=Lock in stargate address
+stargatenh.tooltip.dialing_device.dial_address=Dial address
