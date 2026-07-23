@@ -1,8 +1,8 @@
 ## StargateNH English (US) translation file
 
 ### Blocks
-tile.stargate_block.0.name=Stargate Ring Block
-tile.stargate_block.1.name=Stargate Chevron Block
+tile.default_stargate_block.0.name=Stargate Ring Block
+tile.default_stargate_block.1.name=Stargate Chevron Block
 tile.stargate_controller.0.name=Stargate Controller Block
 tile.formed_stargate.name=Stargate
 tile.dialing_device.name=Dial Home Device

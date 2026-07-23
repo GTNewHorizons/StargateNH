@@ -22,16 +22,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockStargate extends Block {
 
-    public BlockStargate() {
+    private final String id;
+
+    public BlockStargate(String id) {
         super(Material.iron);
+        this.id = id;
+        this.setBlockName(id + "_stargate_block");
     }
 
     public int damageDropped(int meta) {
         return meta;
     }
-
-    @SideOnly(Side.CLIENT)
-    private IIcon[] icons;
 
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
@@ -40,22 +41,26 @@ public class BlockStargate extends Block {
         }
     }
 
+    private IIcon ringTextureSide;
+    private IIcon ringTextureTop;
+    private IIcon chevronTexture;
+
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
-        icons = new IIcon[16];
-        for (int i = 0; i < 2; i++) {
-            icons[i] = iconRegister.registerIcon("stargatenh:stargate_block_" + i);
-        }
+        ringTextureSide = iconRegister.registerIcon("stargatenh:" + id + "_stargate_side");
+        ringTextureTop = iconRegister.registerIcon("stargatenh:" + id + "_stargate_top");
+        chevronTexture = iconRegister.registerIcon("stargatenh:" + id + "_stargate_chevron");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta) {
-        if (meta < 0 || meta >= icons.length) {
-            meta = 0;
+        if (side == ForgeDirection.DOWN.ordinal() || side == ForgeDirection.UP.ordinal()) {
+            return ringTextureTop;
         }
-        return icons[meta];
+
+        return (meta == 1) ? chevronTexture : ringTextureSide;
     }
 
     @Override
