@@ -33,8 +33,8 @@ public class BlockStargateController extends Block {
 
         if (checkBlockAndMeta(world, x, y, z, -2, 0, ModBlocks.stargateBlock, 1, facing)
             && checkBlockAndMeta(world, x, y, z, -1, 0, ModBlocks.stargateBlock, 0, facing)
-            && checkBlockAndMeta(world, x, y, z, -1, 0, ModBlocks.stargateBlock, 0, facing)
-            && checkBlockAndMeta(world, x, y, z, -2, 0, ModBlocks.stargateBlock, 1, facing)
+            && checkBlockAndMeta(world, x, y, z, 1, 0, ModBlocks.stargateBlock, 0, facing)
+            && checkBlockAndMeta(world, x, y, z, 2, 0, ModBlocks.stargateBlock, 1, facing)
 
             && checkBlockAndMeta(world, x, y, z, -2, 1, ModBlocks.stargateBlock, 0, facing)
             && checkBlockAndMeta(world, x, y, z, 2, 1, ModBlocks.stargateBlock, 0, facing)
