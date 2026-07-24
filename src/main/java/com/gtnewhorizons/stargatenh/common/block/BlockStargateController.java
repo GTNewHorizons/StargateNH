@@ -12,8 +12,17 @@ import com.gtnewhorizons.stargatenh.ModBlocks;
 
 public class BlockStargateController extends Block {
 
-    public BlockStargateController() {
+    private final ModBlocks.StargateBlocks blockGroup;
+
+    public BlockStargateController(ModBlocks.StargateBlocks blockGroup) {
         super(Material.iron);
+        this.blockGroup = blockGroup;
+        this.setBlockName(blockGroup.id + "_stargate_controller");
+    }
+
+    @Override
+    protected String getTextureName() {
+        return "stargatenh:" + blockGroup.id + "/controller";
     }
 
     @Override
@@ -31,67 +40,67 @@ public class BlockStargateController extends Block {
     public void runStructureCheck(World world, int x, int y, int z) {
         int facing = world.getBlockMetadata(x, y, z);
 
-        if (checkBlockAndMeta(world, x, y, z, -2, 0, ModBlocks.stargateBlock, 1, facing)
-            && checkBlockAndMeta(world, x, y, z, -1, 0, ModBlocks.stargateBlock, 0, facing)
-            && checkBlockAndMeta(world, x, y, z, 1, 0, ModBlocks.stargateBlock, 0, facing)
-            && checkBlockAndMeta(world, x, y, z, 2, 0, ModBlocks.stargateBlock, 1, facing)
+        if (checkBlockAndMeta(world, x, y, z, -2, 0, blockGroup.stargateBlock, 1, facing)
+            && checkBlockAndMeta(world, x, y, z, -1, 0, blockGroup.stargateBlock, 0, facing)
+            && checkBlockAndMeta(world, x, y, z, 1, 0, blockGroup.stargateBlock, 0, facing)
+            && checkBlockAndMeta(world, x, y, z, 2, 0, blockGroup.stargateBlock, 1, facing)
 
-            && checkBlockAndMeta(world, x, y, z, -2, 1, ModBlocks.stargateBlock, 0, facing)
-            && checkBlockAndMeta(world, x, y, z, 2, 1, ModBlocks.stargateBlock, 0, facing)
-            && checkBlockAndMeta(world, x, y, z, -2, 2, ModBlocks.stargateBlock, 1, facing)
-            && checkBlockAndMeta(world, x, y, z, 2, 2, ModBlocks.stargateBlock, 1, facing)
-            && checkBlockAndMeta(world, x, y, z, -2, 3, ModBlocks.stargateBlock, 0, facing)
-            && checkBlockAndMeta(world, x, y, z, 2, 3, ModBlocks.stargateBlock, 0, facing)
+            && checkBlockAndMeta(world, x, y, z, -2, 1, blockGroup.stargateBlock, 0, facing)
+            && checkBlockAndMeta(world, x, y, z, 2, 1, blockGroup.stargateBlock, 0, facing)
+            && checkBlockAndMeta(world, x, y, z, -2, 2, blockGroup.stargateBlock, 1, facing)
+            && checkBlockAndMeta(world, x, y, z, 2, 2, blockGroup.stargateBlock, 1, facing)
+            && checkBlockAndMeta(world, x, y, z, -2, 3, blockGroup.stargateBlock, 0, facing)
+            && checkBlockAndMeta(world, x, y, z, 2, 3, blockGroup.stargateBlock, 0, facing)
 
-            && checkBlockAndMeta(world, x, y, z, -2, 4, ModBlocks.stargateBlock, 1, facing)
-            && checkBlockAndMeta(world, x, y, z, -1, 4, ModBlocks.stargateBlock, 0, facing)
-            && checkBlockAndMeta(world, x, y, z, 0, 4, ModBlocks.stargateBlock, 1, facing)
-            && checkBlockAndMeta(world, x, y, z, 1, 4, ModBlocks.stargateBlock, 0, facing)
-            && checkBlockAndMeta(world, x, y, z, 2, 4, ModBlocks.stargateBlock, 1, facing)) {
+            && checkBlockAndMeta(world, x, y, z, -2, 4, blockGroup.stargateBlock, 1, facing)
+            && checkBlockAndMeta(world, x, y, z, -1, 4, blockGroup.stargateBlock, 0, facing)
+            && checkBlockAndMeta(world, x, y, z, 0, 4, blockGroup.stargateBlock, 1, facing)
+            && checkBlockAndMeta(world, x, y, z, 1, 4, blockGroup.stargateBlock, 0, facing)
+            && checkBlockAndMeta(world, x, y, z, 2, 4, blockGroup.stargateBlock, 1, facing)) {
             formGate(world, x, y, z, facing);
         }
     }
 
     private void formGate(World world, int x, int y, int z, int facing) {
-        setRel(world, x, y, z, facing, -2, 0, ModBlocks.formedGateFakeBlock, 1);
-        setRel(world, x, y, z, facing, -1, 0, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 1, 0, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 2, 0, ModBlocks.formedGateFakeBlock, 1);
+        setRel(world, x, y, z, facing, -2, 0, blockGroup.formedGateBlock, 1);
+        setRel(world, x, y, z, facing, -1, 0, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 1, 0, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 2, 0, blockGroup.formedGateBlock, 1);
 
-        setRel(world, x, y, z, facing, -2, 1, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 2, 1, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, -2, 2, ModBlocks.formedGateFakeBlock, 1);
-        setRel(world, x, y, z, facing, 2, 2, ModBlocks.formedGateFakeBlock, 1);
-        setRel(world, x, y, z, facing, -2, 3, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 2, 3, ModBlocks.formedGateFakeBlock, 0);
+        setRel(world, x, y, z, facing, -2, 1, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 2, 1, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, -2, 2, blockGroup.formedGateBlock, 1);
+        setRel(world, x, y, z, facing, 2, 2, blockGroup.formedGateBlock, 1);
+        setRel(world, x, y, z, facing, -2, 3, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 2, 3, blockGroup.formedGateBlock, 0);
 
-        setRel(world, x, y, z, facing, -2, 4, ModBlocks.formedGateFakeBlock, 1);
-        setRel(world, x, y, z, facing, -1, 4, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 0, 4, ModBlocks.formedGateFakeBlock, 1);
-        setRel(world, x, y, z, facing, 1, 4, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 2, 4, ModBlocks.formedGateFakeBlock, 1);
+        setRel(world, x, y, z, facing, -2, 4, blockGroup.formedGateBlock, 1);
+        setRel(world, x, y, z, facing, -1, 4, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 0, 4, blockGroup.formedGateBlock, 1);
+        setRel(world, x, y, z, facing, 1, 4, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 2, 4, blockGroup.formedGateBlock, 1);
 
-        world.setBlock(x, y, z, ModBlocks.formedGateFakeBlock, facing + 2, 3);
+        world.setBlock(x, y, z, blockGroup.formedGateBlock, facing + 2, 3);
     }
 
     private void deform(World world, int x, int y, int z, int facing) {
-        setRel(world, x, y, z, facing, -2, 0, ModBlocks.formedGateFakeBlock, 1);
-        setRel(world, x, y, z, facing, -1, 0, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 1, 0, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 2, 0, ModBlocks.formedGateFakeBlock, 1);
+        setRel(world, x, y, z, facing, -2, 0, blockGroup.formedGateBlock, 1);
+        setRel(world, x, y, z, facing, -1, 0, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 1, 0, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 2, 0, blockGroup.formedGateBlock, 1);
 
-        setRel(world, x, y, z, facing, -2, 1, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 2, 1, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, -2, 2, ModBlocks.formedGateFakeBlock, 1);
-        setRel(world, x, y, z, facing, 2, 2, ModBlocks.formedGateFakeBlock, 1);
-        setRel(world, x, y, z, facing, -2, 3, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 2, 3, ModBlocks.formedGateFakeBlock, 0);
+        setRel(world, x, y, z, facing, -2, 1, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 2, 1, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, -2, 2, blockGroup.formedGateBlock, 1);
+        setRel(world, x, y, z, facing, 2, 2, blockGroup.formedGateBlock, 1);
+        setRel(world, x, y, z, facing, -2, 3, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 2, 3, blockGroup.formedGateBlock, 0);
 
-        setRel(world, x, y, z, facing, -2, 4, ModBlocks.formedGateFakeBlock, 1);
-        setRel(world, x, y, z, facing, -1, 4, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 0, 4, ModBlocks.formedGateFakeBlock, 1);
-        setRel(world, x, y, z, facing, 1, 4, ModBlocks.formedGateFakeBlock, 0);
-        setRel(world, x, y, z, facing, 2, 4, ModBlocks.formedGateFakeBlock, 1);
+        setRel(world, x, y, z, facing, -2, 4, blockGroup.formedGateBlock, 1);
+        setRel(world, x, y, z, facing, -1, 4, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 0, 4, blockGroup.formedGateBlock, 1);
+        setRel(world, x, y, z, facing, 1, 4, blockGroup.formedGateBlock, 0);
+        setRel(world, x, y, z, facing, 2, 4, blockGroup.formedGateBlock, 1);
     }
 
     private void setRel(World world, int x, int y, int z, int facing, int offsetX, int offsetY, Block newBlock,

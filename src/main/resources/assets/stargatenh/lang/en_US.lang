@@ -1,11 +1,38 @@
 ## StargateNH English (US) translation file
 
 ### Blocks
+tile.dialing_device.name=Dial Home Device
+
 tile.default_stargate_block.0.name=Stargate Ring Block
 tile.default_stargate_block.1.name=Stargate Chevron Block
-tile.stargate_controller.0.name=Stargate Controller Block
-tile.formed_stargate.name=Stargate
-tile.dialing_device.name=Dial Home Device
+tile.default_stargate_controller.name=Stargate Controller Block
+tile.default_stargate_formed.name=Stargate
+
+tile.split_origin_stargate_block.0.name=Stargate Ring Block
+tile.split_origin_stargate_block.1.name=Stargate Chevron Block
+tile.split_origin_stargate_controller.name=Stargate Controller Block
+tile.split_origin_stargate_formed.name=Stargate of Split Origin (Legacy)
+
+tile.harmonic_breakthrough_stargate_block.0.name=Stargate Ring Block
+tile.harmonic_breakthrough_stargate_block.1.name=Stargate Chevron Block
+tile.harmonic_breakthrough_stargate_controller.name=Stargate Controller Block
+tile.harmonic_breakthrough_stargate_formed.name=Stargate of Harmonic Breakthrough (Legacy)
+
+tile.polychrome_contest_stargate_block.0.name=Stargate Ring Block
+tile.polychrome_contest_stargate_block.1.name=Stargate Chevron Block
+tile.polychrome_contest_stargate_controller.name=Stargate Controller Block
+tile.polychrome_contest_stargate_formed.name=Stargate of Polychrome Contest (Legacy)
+
+tile.dimensional_duplicity_stargate_block.0.name=Stargate Ring Block
+tile.dimensional_duplicity_stargate_block.1.name=Stargate Chevron Block
+tile.dimensional_duplicity_stargate_controller.name=Stargate Controller Block
+tile.dimensional_duplicity_stargate_formed.name=Stargate of Dimensional Duplicity (Legacy)
+
+tile.heavenly_fire_stargate_block.0.name=Stargate Ring Block
+tile.heavenly_fire_stargate_block.1.name=Stargate Chevron Block
+tile.heavenly_fire_stargate_controller.name=Stargate Controller Block
+tile.heavenly_fire_stargate_formed.name=Stargate of Heavenly Fire (Legacy)
+
 
 ### Elements
 ## Gui

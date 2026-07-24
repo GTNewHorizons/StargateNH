@@ -48,9 +48,9 @@ public class BlockStargate extends Block {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
-        ringTextureSide = iconRegister.registerIcon("stargatenh:" + id + "_stargate_side");
-        ringTextureTop = iconRegister.registerIcon("stargatenh:" + id + "_stargate_top");
-        chevronTexture = iconRegister.registerIcon("stargatenh:" + id + "_stargate_chevron");
+        ringTextureSide = iconRegister.registerIcon("stargatenh:" + id + "/stargate_side");
+        ringTextureTop = iconRegister.registerIcon("stargatenh:" + id + "/stargate_top");
+        chevronTexture = iconRegister.registerIcon("stargatenh:" + id + "/stargate_chevron");
     }
 
     @Override

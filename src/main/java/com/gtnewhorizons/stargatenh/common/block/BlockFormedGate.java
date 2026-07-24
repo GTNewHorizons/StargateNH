@@ -21,9 +21,12 @@ import com.gtnewhorizons.stargatenh.common.tileentity.TileStargateController;
  */
 public class BlockFormedGate extends BlockContainer {
 
-    public BlockFormedGate() {
+    private final ModBlocks.StargateBlocks blockGroup;
+
+    public BlockFormedGate(ModBlocks.StargateBlocks blockGroup) {
         super(Material.iron);
-        setBlockName("stargate_formed");
+        this.blockGroup = blockGroup;
+        setBlockName(blockGroup.id + "_stargate_formed");
     }
 
     @Override
@@ -63,12 +66,17 @@ public class BlockFormedGate extends BlockContainer {
     }
 
     @Override
+    public String getUnlocalizedName() {
+        return super.getUnlocalizedName();
+    }
+
+    @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         if (!world.isRemote) {
             ItemStack drop = switch (meta) {
-                case 0 -> new ItemStack(ModBlocks.stargateBlock, 1, 0);
-                case 1 -> new ItemStack(ModBlocks.stargateBlock, 1, 1);
-                case 2 -> new ItemStack(ModBlocks.stargateControllerBlock, 1, 0);
+                case 0 -> new ItemStack(blockGroup.stargateBlock, 1, 0);
+                case 1 -> new ItemStack(blockGroup.stargateBlock, 1, 1);
+                case 2 -> new ItemStack(blockGroup.controllerBlock, 1, 0);
                 default -> null;
             };
 
